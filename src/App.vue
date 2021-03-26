@@ -12,10 +12,10 @@
 
             <template v-for="(oneExer, index) in currentSess.exersizes.filter(
                 (item) => item.exType === 'aerobic')">
-                <div class="exerSet" :key="`div-${index}`">
-              <h5 :key="`exersize-${index}`">Exercise: {{ oneExer.exercise }}</h5>
-           <h5 :key="`distance-${index}`">Distance: {{ oneExer.distance }} {{oneExer.distanceType}}</h5>
-           <h5 :key="`duration-${index}`">Duration: {{ oneExer.duration }}</h5>
+                <div class="exerSet" :key="`div-${index+giveRandom(9999999)}`">
+              <h5 :key="`exersizeAe-${index+giveRandom(9999999)}`">Exercise: {{ oneExer.exercise }}</h5>
+           <h5 :key="`distance-${index+giveRandom(9999999)}`">Distance: {{ oneExer.distance }} {{oneExer.distanceType}}</h5>
+           <h5 :key="`duration-${index+giveRandom(9999999)}`">Duration: {{ oneExer.duration }}</h5>
                 </div>
 
          </template>
@@ -24,11 +24,11 @@
          
             <template  v-for="(oneExer, index) in currentSess.exersizes.filter(
                 (item) => item.exType === 'anaerobic')">
-                <div class="exerSet" :key="`div-${index}`">
-           <h5 :key="`exersize-${index}`">Exercise: {{ oneExer.exercise }}</h5>
-           <h5 :key="`set-${index}`">Sets: {{ oneExer.sets }}</h5>
-           <h5 :key="`reps-${index}`">Reps: {{ oneExer.reps }}</h5>
-           <h5 :key="`weight-${index}`">Weight: {{ oneExer.weight }} {{oneExer.weightType.toUpperCase()}}</h5>
+                <div class="exerSet" :key="`div-${index+giveRandom(9999999)}`">
+           <h5 :key="`exersizeAr-${index+giveRandom(9999999)}`">Exercise: {{ oneExer.exercise }}</h5>
+           <h5 :key="`set-${index+giveRandom(9999999)}`">Sets: {{ oneExer.sets }}</h5>
+           <h5 :key="`reps-${index+giveRandom(9999999)}`">Reps: {{ oneExer.reps }}</h5>
+           <h5 :key="`weight-${index+giveRandom(9999999)}`">Weight: {{ oneExer.weight }} {{oneExer.weightType.toUpperCase()}}</h5>
            </div>
          </template>
          
@@ -194,6 +194,9 @@ export default {
       console.log("Sess after change", this.sessions)
       this.currentSess = {}
       this.adding = false;
+    },
+    giveRandom(max) {
+      return Math.floor(Math.random() * Math.floor(max));
     }
   }
 };
