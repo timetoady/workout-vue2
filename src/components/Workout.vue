@@ -14,9 +14,9 @@
               )"
             >
               <li :key="`exersize-${index}`">Exercise: {{ stuff.exercise }}</li>
-              <li :key="`distance-${index}`">Distance: {{ stuff.distance }}</li>
+              <li :key="`distance-${index}`">Distance: {{ stuff.distance }}  {{ stuff.distanceType }}</li>
               <li :key="`duration-${index}`">
-                Duration: {{ stuff.duration }} {{ stuff.distanceType }}
+                Duration: {{ stuff.duration }}
               </li>
             </template>
           </div>

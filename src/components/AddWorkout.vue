@@ -124,6 +124,8 @@ export default {
         distanceType: "mi",
         isAero: false,
         isAnaero: false,
+        exType: "",
+        added: false,
       },
     };
   },
@@ -132,13 +134,15 @@ export default {
       if (type === 0) {
         this.item.isAero = false;
         this.item.isAnaero = true;
-
+        this.item.exType= 'anaerobic'
       } else {
         this.item.isAero = true;
         this.item.isAnaero = false;
+        this.item.exType= 'aerobic'
       }
     },
     addExer() {
+      this.item.added = true;
       this.$emit('add:item', this.item)
     }
   },
@@ -171,6 +175,7 @@ div#addAnaerobic {
   padding: 0.25rem 0.5rem;
   background-color: #0504aa;
   color: #f2f2f2;
+  border-radius: 6px;
 }
 .addButton {
   font-size: 1rem;
