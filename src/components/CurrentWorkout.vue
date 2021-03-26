@@ -1,7 +1,13 @@
 <template>
    <div id="currentSession">
-       Current session:
-       
+      <h3>Current session:</h3> 
+       <div id="sessionDisplay">
+
+       </div>
+
+
+
+       <button>Complete</button>
    </div>
 </template>
 
@@ -12,5 +18,7 @@ export default {
 </script>
 
 <style>
-
+    #currentSession{
+        margin-top: 1rem;
+    }
 </style>
