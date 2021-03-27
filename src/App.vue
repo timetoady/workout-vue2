@@ -154,8 +154,14 @@ export default {
         exerObject.exercise = item.exerciseAn
         exerObject.sets = item.sets
         exerObject.reps = item.reps
-        exerObject.weight = item.weight
-        exerObject.weightType = item.weightType
+        if(item.weight.trim() === ""){
+          exerObject.weight = "none"
+          exerObject.weightType = ""
+        } else{
+          exerObject.weight = item.weight
+          exerObject.weightType = item.weightType
+        }
+        
         exerObject.exType = item.exType
         this.currentSess.exersizes = [...this.currentSess.exersizes, exerObject]
       } else {
@@ -185,7 +191,7 @@ export default {
       let theDiff = timeInMinutes2 - timeInMinutes1
       const diffInHours = (theDiff / 60)
       if (isNaN(diffInHours) || diffInHours <= 0) {
-        return "Time not set."
+        return "not set"
       } else if (diffInHours < 1) {
         return `${theDiff.toFixed(2)} minutes`
       } else{
@@ -206,6 +212,11 @@ export default {
     deleteSession(id){
       this.sessions = this.sessions.filter(
         session => session.id !== id
+      )
+    },
+    editItem(id, updatedItem) {
+      this.sessions = this.sessions.map(item =>
+      item.id === id ? updatedItem : item
       )
     }
   }

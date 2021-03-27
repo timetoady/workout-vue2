@@ -3,26 +3,32 @@
     <h3>Track your Exercise</h3>
 
     <div id="sessionHistory">
-      <h4>Previous Workouts</h4>
+      <h4>Workout History</h4>
+      <div class="nothingHere" v-if="workouts.length === 0">
+        <p>No workout sessions currently in history.</p>
+      </div>
       <div class="historyGrid">
-        <div v-if="workouts.length === 0">
-          <h3>No sessions currently in history.</h3>
-        </div>
         <ul v-for="session in workouts" :key="session.id">
-          <li><strong>Date: {{ session.date }}</strong></li>
+          <li>
+            <strong>Date: {{ session.date }}</strong>
+          </li>
           <div class="aExercise">
             <template
               v-for="(stuff, index) in session.exersizes.filter(
                 (item) => item.exType === 'aerobic'
               )"
             >
-              <li :key="`exersize-${index}`"><strong>Exercise: </strong>{{ stuff.exercise }}</li>
-              <li :key="`distance-${index}`"><strong>Distance: </strong>{{ stuff.distance }}  {{ stuff.distanceType }}</li>
+              <li :key="`exersize-${index}`">
+                <strong>Exercise: </strong>{{ stuff.exercise }}
+              </li>
+              <li :key="`distance-${index}`">
+                <strong>Distance: </strong>{{ stuff.distance }}
+                {{ stuff.distanceType }}
+              </li>
               <li :key="`duration-${index}`">
                 <strong>Duration: </strong>{{ stuff.duration }}
               </li>
             </template>
-            
           </div>
 
           <div class="aExercise">
@@ -32,14 +38,28 @@
               )"
               class="aExercise"
             >
-              <li :key="`exercise-${index}`"><strong>Exercise: </strong>{{ stuff.exercise }}</li>
-              <li :key="`sets-${index}`"><strong>Sets: </strong>{{ stuff.sets }}</li>
-              <li :key="`reps-${index}`"><strong>Reps: </strong>{{ stuff.reps }}</li>
+              <li :key="`exercise-${index}`">
+                <strong>Exercise: </strong>{{ stuff.exercise }}
+              </li>
+              <li :key="`sets-${index}`">
+                <strong>Sets: </strong>{{ stuff.sets }}
+              </li>
+              <li :key="`reps-${index}`">
+                <strong>Reps: </strong>{{ stuff.reps }}
+              </li>
               <li :key="`weight-${index}`">
-                <strong>Weight: </strong>{{ stuff.weight }} {{ stuff.weightType }}
+                <strong>Weight: </strong>{{ stuff.weight }}
+                {{ stuff.weightType }}
               </li>
             </template>
-            <button @click="$emit('delete:session', session.id)" class="deleteButton">DELETE</button>
+            <div class="editDelete">
+              <button
+                @click="$emit('delete:session', session.id)"
+                class="deleteButton"
+              >
+                DELETE
+              </button>
+            </div>
           </div>
         </ul>
       </div>
@@ -91,28 +111,37 @@ export default {
   max-width: 1200px;
 }
 div.historyGrid > ul:nth-of-type(odd) {
-    background: #eee;
+  background: #eee;
 }
 
-div.historyGrid ul{
+div.historyGrid ul {
+  margin: 0;
+  padding: 1rem;
+}
+.nothingHere {
   margin: 0;
   padding: 1rem;
 }
 .aExercise {
   padding: 0.25rem;
 }
-.deleteButton{
-    font-size: 1rem;
+.deleteButton {
+  font-size: 1rem;
   padding: 0.25rem 0.5rem;
-  
+
   background-color: #0504aa;
   color: #f2f2f2;
   align-self: right;
   margin-top: 0.5rem;
   cursor: pointer;
+  border-radius: 3px;
 }
 button.deleteButton:hover {
-    transition: 500ms;
-    color: red;
+  transition: 500ms;
+  color: red;
+}
+.editDelete {
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>

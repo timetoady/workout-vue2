@@ -15,11 +15,13 @@
             type="text"
             name="exercise"
             v-model="item.exerciseAn"
+            :class="{ 'has-error': submitting && invalidItem2 }"
+            @focus="clearStatus"
           />
         </label>
-          <label>
-            Date 
-          <input type="date" name="date" v-model="item.date">
+        <label>
+          Date
+          <input type="date" name="date" v-model="item.date" />
         </label>
         <label>
           # Sets
@@ -42,15 +44,21 @@
               name="weight"
               v-model="item.weight"
               placeholder="10, 15"
-                 />
+            />
             <select name="weightType" id="theWeight" v-model="item.weightType">
               <option value="kg">KG</option>
               <option value="lb">LB</option>
             </select>
             <div class="distanceDiv"></div>
             <div></div>
-            <div class="distanceDiv">
+            <div class="addButtonDiv">
               <button class="addButton">ADD</button>
+              <p v-if="error && submitting && item.isAnaero" class="errorMessage">
+                Exercise field is empty. Please name your anaerobic exercise.
+              </p>
+              <p v-if="success && item.isAnaero" class="successMessage">
+                Exercise added to session.
+              </p>
             </div>
           </label>
         </div>
@@ -67,10 +75,13 @@
             type="text"
             name="exercise"
             v-model="item.exerciseAe"
+            :class="{ 'has-error': submitting && invalidItem1 }"
+            @focus="clearStatus"
           />
         </label>
-        <label>Date 
-          <input type="date" name="date" v-model="item.date">
+        <label
+          >Date
+          <input type="date" name="date" v-model="item.date" />
         </label>
         <label
           >Distance
@@ -95,10 +106,15 @@
           <input type="time" name="duration1" v-model="item.duration1" /> to
           <input type="time" name="duration2" v-model="item.duration2" />
         </label>
-        <div class="distanceDiv"></div>
-        <div></div>
-        <div class="distanceDiv">
+
+        <div class="addButtonDiv">
           <button class="addButton">ADD</button>
+          <p v-if="error && submitting && item.isAero" class="errorMessage">
+            Exercise field is empty. Please name your aerobic exercise.
+          </p>
+          <p v-if="success && item.isAero" class="successMessage">
+            Exercise added to session.
+          </p>
         </div>
       </form>
     </div>
@@ -111,7 +127,7 @@ export default {
   data() {
     return {
       item: {
-        date: new Date().toISOString().split('T')[0],
+        date: new Date().toISOString().split("T")[0],
         exerciseAn: "",
         exerciseAe: "",
         sets: 2,
@@ -127,6 +143,9 @@ export default {
         exType: "",
         added: false,
       },
+      submitting: false,
+      error: false,
+      success: false,
     };
   },
   methods: {
@@ -134,17 +153,46 @@ export default {
       if (type === 0) {
         this.item.isAero = false;
         this.item.isAnaero = true;
-        this.item.exType= 'anaerobic'
+        this.item.exType = "anaerobic";
+        this.clearStatus();
       } else {
         this.item.isAero = true;
         this.item.isAnaero = false;
-        this.item.exType= 'aerobic'
+        this.item.exType = "aerobic";
+        this.clearStatus();
       }
     },
     addExer() {
       this.item.added = true;
-      this.$emit('add:item', this.item)
-    }
+      this.submitting = true;
+      this.clearStatus();
+      if (this.invalidItem2 && this.item.isAnaero) {
+        console.log("Error!");
+        this.error = true;
+        return;
+      }
+      if (this.invalidItem1 && this.item.isAero) {
+        console.log("Error!");
+        this.error = true;
+        return;
+      }
+      this.$emit("add:item", this.item);
+      this.error = false;
+      this.success = true;
+      this.submitting = false;
+    },
+    clearStatus() {
+      this.success = false;
+      this.error = false;
+    },
+  },
+  computed: {
+    invalidItem1() {
+      return this.item.exerciseAe.trim() === "";
+    },
+    invalidItem2() {
+      return this.item.exerciseAn.trim() === "";
+    },
   },
 };
 </script>
@@ -156,7 +204,6 @@ export default {
   display: grid;
   gap: 20px;
   grid-template-columns: 1fr 1fr;
-  
 }
 div#addAerobic,
 div#addAnaerobic {
@@ -185,11 +232,21 @@ div#addAnaerobic {
   background-color: #0504aa;
   color: #f2f2f2;
   align-self: right;
-  margin-top: 0.5rem;
-  cursor: pointer;
-  
-}
 
+  cursor: pointer;
+  max-height: 35px;
+}
+.addButtonDiv {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem;
+}
+.addButtonDiv p {
+  padding: 0 0.5rem;
+}
+p.errorMessage {
+  margin: 0;
+}
 .distanceDiv {
   display: flex;
   justify-content: space-between;
@@ -213,5 +270,12 @@ select {
 }
 .highlighted {
   border: 3px green solid;
+}
+.errorMessage {
+  color: rgb(248, 48, 48);
+}
+
+.successMessage {
+  color: rgb(0, 255, 48);
 }
 </style>
