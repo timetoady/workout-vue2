@@ -176,6 +176,7 @@ div#addAnaerobic {
   background-color: #0504aa;
   color: #f2f2f2;
   border-radius: 6px;
+  cursor: pointer;
 }
 .addButton {
   font-size: 1rem;
@@ -185,7 +186,10 @@ div#addAnaerobic {
   color: #f2f2f2;
   align-self: right;
   margin-top: 0.5rem;
+  cursor: pointer;
+  
 }
+
 .distanceDiv {
   display: flex;
   justify-content: space-between;

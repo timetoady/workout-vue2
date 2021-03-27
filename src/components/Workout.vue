@@ -5,20 +5,24 @@
     <div id="sessionHistory">
       <h4>Previous Workouts</h4>
       <div class="historyGrid">
+        <div v-if="workouts.length === 0">
+          <h3>No sessions currently in history.</h3>
+        </div>
         <ul v-for="session in workouts" :key="session.id">
-          <li>Date: {{ session.date }}</li>
+          <li><strong>Date: {{ session.date }}</strong></li>
           <div class="aExercise">
             <template
               v-for="(stuff, index) in session.exersizes.filter(
                 (item) => item.exType === 'aerobic'
               )"
             >
-              <li :key="`exersize-${index}`">Exercise: {{ stuff.exercise }}</li>
-              <li :key="`distance-${index}`">Distance: {{ stuff.distance }}  {{ stuff.distanceType }}</li>
+              <li :key="`exersize-${index}`"><strong>Exercise: </strong>{{ stuff.exercise }}</li>
+              <li :key="`distance-${index}`"><strong>Distance: </strong>{{ stuff.distance }}  {{ stuff.distanceType }}</li>
               <li :key="`duration-${index}`">
-                Duration: {{ stuff.duration }}
+                <strong>Duration: </strong>{{ stuff.duration }}
               </li>
             </template>
+            
           </div>
 
           <div class="aExercise">
@@ -28,13 +32,14 @@
               )"
               class="aExercise"
             >
-              <li :key="`exercise-${index}`">Exercise: {{ stuff.exercise }}</li>
-              <li :key="`sets-${index}`">Sets: {{ stuff.sets }}</li>
-              <li :key="`reps-${index}`">Reps: {{ stuff.reps }}</li>
+              <li :key="`exercise-${index}`"><strong>Exercise: </strong>{{ stuff.exercise }}</li>
+              <li :key="`sets-${index}`"><strong>Sets: </strong>{{ stuff.sets }}</li>
+              <li :key="`reps-${index}`"><strong>Reps: </strong>{{ stuff.reps }}</li>
               <li :key="`weight-${index}`">
-                Weight: {{ stuff.weight }} {{ stuff.weightType }}
+                <strong>Weight: </strong>{{ stuff.weight }} {{ stuff.weightType }}
               </li>
             </template>
+            <button @click="$emit('delete:session', session.id)" class="deleteButton">DELETE</button>
           </div>
         </ul>
       </div>
@@ -95,5 +100,19 @@ div.historyGrid ul{
 }
 .aExercise {
   padding: 0.25rem;
+}
+.deleteButton{
+    font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  
+  background-color: #0504aa;
+  color: #f2f2f2;
+  align-self: right;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+button.deleteButton:hover {
+    transition: 500ms;
+    color: red;
 }
 </style>

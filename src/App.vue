@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1 class="title">Workout Appens</h1>
-    <workout :workouts="sessions" />
+    <workout :workouts="sessions" @delete:session="deleteSession" />
     <add-workout @add:item="addItem"/>
       <div id="currentSession">
       
@@ -35,6 +35,7 @@
 
          </div>
         <button @click="completeSess" class="completeButton">Complete</button>
+        <button @click="currentSess = {}" class="completeButton">Clear</button>
        </div>
 
 
@@ -47,7 +48,9 @@
 <script>
 import Workout from "./components/Workout.vue";
 import AddWorkout from './components/AddWorkout.vue';
+//Next: validation for entry fields
 
+//Styling fixes, espeically for previous workouts added
 
 export default {
   name: "App",
@@ -61,7 +64,7 @@ export default {
       sessions: [
         {
           id: 1,
-          date: "Jan 26 2021",
+          date: "2021-01-26",
           exersizes: [
             {
               
@@ -84,7 +87,7 @@ export default {
         },
         {
           id: 2,
-          date: "Jan 27 2021",
+          date: "2021-01-27",
           exersizes: [
             {
               
@@ -107,7 +110,7 @@ export default {
         },
                 {
           id: 3,
-          date: "Feb 15 2021",
+          date: "2021-02-17",
           exersizes: [
             {
               
@@ -181,7 +184,9 @@ export default {
       let timeInMinutes2 = (parseInt(hours2) * 60) + parseInt(minutes2)
       let theDiff = timeInMinutes2 - timeInMinutes1
       const diffInHours = (theDiff / 60)
-      if (diffInHours < 1) {
+      if (isNaN(diffInHours) || diffInHours <= 0) {
+        return "Time not set."
+      } else if (diffInHours < 1) {
         return `${theDiff.toFixed(2)} minutes`
       } else{
         return `${diffInHours.toFixed(2)} hours`
@@ -197,6 +202,11 @@ export default {
     },
     giveRandom(max) {
       return Math.floor(Math.random() * Math.floor(max));
+    },
+    deleteSession(id){
+      this.sessions = this.sessions.filter(
+        session => session.id !== id
+      )
     }
   }
 };
@@ -209,6 +219,9 @@ export default {
   padding: .3rem;
   margin: 0 auto;
   color: #2c3e50;
+}
+#sessionDisplay{
+  transition: 400ms ease-in-out;
 }
 .title{
   margin-bottom: 0;
@@ -224,6 +237,10 @@ export default {
   padding: 0.25rem 0.5rem;
   background-color: #0504aa;
   color: #f2f2f2;
+  margin-top: .4rem;
+  margin-left: .4rem;
+  border-radius: 6px;
+  cursor: pointer;
 }
 .exerciseList{
   display: flex;
@@ -235,5 +252,9 @@ export default {
 }
 .exerSet{
   padding: 1rem;
+  border: 2px dashed #e2e2e2
+}
+.exerSet h5{
+  margin: .25rem 0
 }
 </style>
