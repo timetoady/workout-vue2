@@ -18,7 +18,7 @@
                 (item) => item.exType === 'aerobic'
               )"
             >
-              <li :key="`exersize-${index}`">
+              <li class="exerStart" :key="`exersize-${index}`">
                 <strong>Exercise: </strong>{{ stuff.exercise }}
               </li>
               <li :key="`distance-${index}`">
@@ -38,7 +38,7 @@
               )"
               class="aExercise"
             >
-              <li :key="`exercise-${index}`">
+              <li class="exerStart" :key="`exercise-${index}`">
                 <strong>Exercise: </strong>{{ stuff.exercise }}
               </li>
               <li :key="`sets-${index}`">
@@ -106,12 +106,24 @@ export default {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
   text-align: left;
-  border: 2px solid black;
+  border: 10px inset;
   margin: 0.5rem auto;
   max-width: 1200px;
+  padding: 20px;
 }
 div.historyGrid > ul:nth-of-type(odd) {
-  background: #eee;
+  background: #f3f3f3;
+  border: 2px solid rgba(0, 0, 0, 0.712);
+  box-shadow: 1px 1px 5px black;
+  border-radius: 6px;
+}
+div.historyGrid > ul:nth-of-type(even) {
+  background: rgb(63, 114, 251);
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  border: 2px solid rgba(0, 0, 0, 0.685);
+  border-radius: 6px;
+  box-shadow: 1px 1px 5px black;
 }
 
 div.historyGrid ul {
@@ -124,6 +136,9 @@ div.historyGrid ul {
 }
 .aExercise {
   padding: 0.25rem;
+}
+.exerStart{
+  padding-top: 10px;
 }
 .deleteButton {
   font-size: 1rem;

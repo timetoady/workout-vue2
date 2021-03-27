@@ -149,6 +149,7 @@ export default {
     };
   },
   methods: {
+    //Toggles if Anaerobic or Aerobic are active
     toggleActive(type) {
       if (type === 0) {
         this.item.isAero = false;
@@ -162,6 +163,7 @@ export default {
         this.clearStatus();
       }
     },
+    //Adds exercise, and governs if error state (exercise field empty and which exercise type active)
     addExer() {
       this.item.added = true;
       this.submitting = true;
@@ -180,13 +182,16 @@ export default {
       this.error = false;
       this.success = true;
       this.submitting = false;
+      
     },
+    //Clears status of error or success
     clearStatus() {
       this.success = false;
       this.error = false;
     },
   },
   computed: {
+    //Check if exercize fields empty. First one is for Aerobic, second for AnAerobic.
     invalidItem1() {
       return this.item.exerciseAe.trim() === "";
     },
@@ -221,9 +226,14 @@ div#addAnaerobic {
   font-size: 1.5rem;
   padding: 0.25rem 0.5rem;
   background-color: #0504aa;
-  color: #f2f2f2;
+  color: #f3f3f3;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.addButtons button:hover{
+  transition: 300ms ease-in;
+  color: rgb(0, 255, 48)
 }
 .addButton {
   font-size: 1rem;
@@ -251,9 +261,6 @@ p.errorMessage {
   display: flex;
   justify-content: space-between;
 }
-/* .weightDiv {
-  display: flex;
-} */
 label.weightDiv {
   display: flex;
 }
@@ -268,14 +275,13 @@ select {
   margin: 0;
   font-size: 1.2rem;
 }
-.highlighted {
-  border: 3px green solid;
-}
 .errorMessage {
   color: rgb(248, 48, 48);
 }
-
 .successMessage {
   color: rgb(0, 255, 48);
+}
+.has-error{
+  border: 1px solid red;
 }
 </style>
