@@ -53,12 +53,15 @@
             <div></div>
             <div class="addButtonDiv">
               <button class="addButton">ADD</button>
+              <div>
               <p v-if="error && submitting && item.isAnaero" class="errorMessage">
                 Exercise field is empty. Please name your anaerobic exercise.
               </p>
               <p v-if="success && item.isAnaero" class="successMessage">
                 Exercise added to session.
               </p>
+              </div>
+
             </div>
           </label>
         </div>
@@ -109,12 +112,16 @@
 
         <div class="addButtonDiv">
           <button class="addButton">ADD</button>
+          <div>
           <p v-if="error && submitting && item.isAero" class="errorMessage">
             Exercise field is empty. Please name your aerobic exercise.
           </p>
           <p v-if="success && item.isAero" class="successMessage">
             Exercise added to session.
-          </p>
+            </p>
+          </div>
+
+          
         </div>
       </form>
     </div>
@@ -280,6 +287,7 @@ select {
 }
 .successMessage {
   color: rgb(0, 255, 48);
+  margin: 0;
 }
 .has-error{
   border: 1px solid red;

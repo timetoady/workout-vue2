@@ -111,6 +111,16 @@ export default {
   max-width: 1200px;
   padding: 20px;
 }
+@media screen and (max-width: 900px){
+  .historyGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 700px){
+  .historyGrid {
+    grid-template-columns: 1fr;
+  }
+}
 div.historyGrid > ul:nth-of-type(odd) {
   background: #f3f3f3;
   border: 2px solid rgba(0, 0, 0, 0.712);
